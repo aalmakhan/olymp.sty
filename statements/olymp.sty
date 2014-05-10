@@ -12,6 +12,7 @@
 
 \newif\if@landscape\@landscapefalse
 \newif\if@russian\@russianfalse
+\newif\if@kazakh\@kazakhfalse
 \newif\if@arabic\@arabicfalse
 
 \DeclareOption{landscape}{
@@ -19,6 +20,9 @@
 }
 \DeclareOption{russian}{
     \@russiantrue
+}
+\DeclareOption{kazakh}{
+    \@kazakhtrue
 }
 \DeclareOption{arabic}{
     \@arabictrue
@@ -124,8 +128,15 @@
 \renewcommand{\leq}{\leqslant}
 \renewcommand{\geq}{\geqslant}
 \else
+\if@kazakh
+\renewcommand{\le}{\leqslant}
+\renewcommand{\ge}{\geqslant}
+\renewcommand{\leq}{\leqslant}
+\renewcommand{\geq}{\geqslant}
+\else
 \parindent=0mm
 \parskip=1ex
+\fi
 \fi
 
 % -- End of setup sizes --
@@ -174,6 +185,48 @@
 \def\kw@defaultinputname{тест}
 \def\kw@defaultoutputname{ответ}
 \else
+\if@kazakh
+\def\kw@Problem{есебі}
+\def\kw@ProblemAuthor{Автор:}
+\def\kw@ProblemDeveloper{Разработчик:}
+\def\kw@ProblemOrigin{Источник:}
+\def\kw@InputFileName{Енгізу файлының аты:}
+\def\kw@OutputFileName{Шығару файлының аты:}
+\def\kw@TimeLimit{Уақыт шектеу:}
+\def\kw@MemoryLimit{Жадыға шектеу:}
+\def\kw@Feedback{Отображение результатов:}
+\def\kw@stdin{стандартный поток ввода}
+\def\kw@stdout{стандартный поток вывода}
+\def\kw@Specification{Спецификация}
+\def\kw@Input{Енгізу файлының форматы}
+\def\kw@Output{Шығару файлының форматы}
+\def\kw@Example{Мысал}
+\def\kw@Examples{Мысалдар}
+\def\kwExampleNotes{Пояснение}
+\def\kw@Explanation{Пояснение к примеру}
+\def\kw@Explanations{Пояснения к примерам}
+\def\kw@Illustration{Иллюстрация}
+\def\kw@Scoring{Система оценки}
+\def\kw@Note{Түсініктеме}
+\def\kw@Notes{Замечания}
+\def\kw@Constraints{Ограничения}
+\def\kw@version{версия}
+\def\kw@revision{ревизия}
+\def\kw@SubtaskOne{Подзадача 1}
+\def\kw@SubtaskTwo{Подзадача 2}
+\def\kw@SubtaskThree{Подзадача 3}
+\def\kw@SubtaskFour{Подзадача 4}
+\def\kw@SubtaskFive{Подзадача 5}
+\def\kw@SubtaskSix{Подзадача 6}
+\def\kw@Subtask{Подзадача}
+\def\kw@points{баллы}
+\def\kw@page{бет}
+\def\kw@of{из}
+\def\kw@notstated{не указан}
+\def\kw@IntentionallyBlankPage{Эта страница специально оставлена пустой}
+\def\kw@defaultinputname{тест}
+\def\kw@defaultoutputname{ответ}
+\else
 \def\kw@Problem{Problem}
 \def\kw@ProblemAuthor{Author:}
 \def\kw@ProblemDeveloper{Developer:}
@@ -214,6 +267,7 @@
 \def\kw@IntentionallyBlankPage{This page is intentionally left blank}
 \def\kw@defaultinputname{test}
 \def\kw@defaultoutputname{answer}
+\fi
 \fi
 
 \afterproblemhead=3mm
@@ -307,13 +361,21 @@
 \if@russian
 \def\defaulttimelimit{2 секунды}
 \else
+\if@kazakh
+\def\defaulttimelimit{2 секунд}
+\else
 \def\defaulttimelimit{2 seconds}
+\fi
 \fi
 
 \if@russian
 \def\defaultmemorylimit{256 мебибайт}
 \else
+\if@kazakh
+\def\defaultmemorylimit{256 мебибайт}
+\else
 \def\defaultmemorylimit{256 mebibytes}
+\fi
 \fi
 
 % -- End of default limits definition --
@@ -386,7 +448,10 @@
     {
         \noindent
         \refstepcounter{problem}
-        \textbf{\problemheadfont\textsf{\kw@Problem\ \if@arabic\arabic{problem}.\else\Alph{problem}.\fi\ #1}}%
+        \if@kazakh
+        	\textbf{\problemheadfont\textsf{\if@arabic\arabic{problem}\else\Alph{problem}\fi\ \kw@Problem.\ #1}}
+	\else        
+        	\textbf{\problemheadfont\textsf{\kw@Problem\ \if@arabic\arabic{problem}.\else\Alph{problem}.\fi\ #1}}%
         \nopagebreak%
         \par\vspace{\afterproblemhead}%
         \problemtextfont\parindent=6.5mm%
